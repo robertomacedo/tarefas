@@ -59,3 +59,6 @@ def mover_para_tarefas(rquest, tarefa_id):
     tarefa.status = 'pendente'
     tarefa.save()
     return redirect('tarefas_pendentes_list')
+
+def home(request):
+    return render(request, 'tarefas/home.html')
