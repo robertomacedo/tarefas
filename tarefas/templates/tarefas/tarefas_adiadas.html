@@ -1,31 +1,15 @@
 {% extends 'base.html' %}
-{% load crispy_forms_tags %}
 
-{% block title %}{% endblock %}
-
+{% block title %}TAREFAS CONCLUIDAS{% endblock %}
 
 {% block content %}
 <div class="h-100 p-5 bg-light border rounded-3">
 
-    <h1>Adicionar Tarefa</h1>
-    <form method="POST">
-        {% csrf_token %}
-        {{form|crispy}}
-        <br>
-        <input type="submit" value="Salvar">
-    </form>
-    <hr>
-
-    <h1>Tarefas pendentes:</h1>
+    
+    <h1>Tarefas Adiadas:</h1>
     <div class="list-group">
-        {% for tarefa in tarefas_pendentes %}
-            {% if tarefa.categoria == 'urgente' %}
-                <button type="button" class="list-group-item list-group-item-danger list-group-item-action" data-bs-toggle="modal" data-bs-target="#modal{{tarefa.id}}">
-                {% elif tarefa.categoria == 'importante' %}
+     {% for tarefa in tarefas_adiadas %}
                 <button type="button" class="list-group-item list-group-item-warning list-group-item-action" data-bs-toggle="modal" data-bs-target="#modal{{tarefa.id}}">
-                {% else %}
-                <button type="button" class="list-group-item list-group-item-primary list-group-item-action" data-bs-toggle="modal" data-bs-target="#modal{{tarefa.id}}">
-                {% endif %}
                 
                 <h5>{{tarefa.descricao}}</h5>
                 <small>Criado em: {{tarefa.created.day}}/{{tarefa.created.month}}/{{tarefa.created.year}}</small>
@@ -39,15 +23,19 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                            <a class="btn btn-success" href="{% url 'concluir_tarefa' tarefa.id %}">Concluir</a>
-                            <a class="btn btn-danger" href="{% url 'excluir_tarefa' tarefa.id %}">Excluir</a>
-                            <a class="btn btn-warning" href="{% url 'adiar_tarefa' tarefa.id %}">Adiar</a>
+                            <a class="btn btn-success" href="{% url 'mover_para_tarefas' tarefa.id %}">Mover para tarefas</a>
+                            <a class="btn btn-success" href="{% url 'excluir_tarefa' tarefa.id %}">Excluir</a>
                             <a class="btn btn-primary" href="{% url 'editar_tarefa' tarefa.id %}">Editar</a>
+                            
                         </div>
                     </div>
                 </div>
             </div>
-        {% endfor %}
+            {% empty %}
+            <h3>Nenhuma tarefa foi adiada</h3>
+
+            {% endfor %}
     </div>
 </div>
+
 {% endblock %}
