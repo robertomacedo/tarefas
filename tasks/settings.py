@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'tasks.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgreql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'd1s319kv7dohqi',
         'HOST': 'ec2-52-2-118-38.compute-1.amazonaws.com',
         'PORT': 5432,
